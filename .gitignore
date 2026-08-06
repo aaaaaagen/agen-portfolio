@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Local visual QA captures (production assets live under public/).
+/*.png
+/*.jpg
+/*.jpeg
