@@ -25,7 +25,7 @@ async function externalizeMedia(clientDirectory) {
   const textExtensions = new Set([".css", ".html", ".js", ".json", ".svg"]);
   await Promise.all(files.filter((file) => textExtensions.has(path.extname(file))).map(async (file) => {
     const source = await readFile(file, "utf8");
-    const updated = source.replace(/\/assets\/(?!index-[^/]+\.(?:js|css)(?=[?#"'\s]))/gi, mediaBase);
+    const updated = source.replace(/(?<!raw\.githubusercontent\.com)\/assets\/(?!index-[^/]+\.(?:js|css)\b)/gi, mediaBase);
     if (updated !== source) await writeFile(file, updated);
   }));
 
