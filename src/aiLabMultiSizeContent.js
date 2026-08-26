@@ -10,7 +10,7 @@ export const aiLabMultiSizeContent = {
     {
       heading: "项目概述",
       image: {
-        src: "/assets/work-previews/ai-lab-multi-size-overview.png",
+        src: "/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30",
         alt: "AI 多尺寸延展 Figma 插件界面与多尺寸生成结果",
       },
       paragraphs: [

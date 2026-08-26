@@ -382,7 +382,7 @@ const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
   const previewOnlyIds = ["06.01", "06.05"];
   const assets = projectAssets[id] || (id === "06.04" || id === "06.05" ? [] : [{ thumb: work.preview, full: work.preview }]);
   const previewImages = id === "06.05"
-    ? ["/assets/work-previews/ai-lab-multi-size-overview.png"]
+    ? ["/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30"]
     : previewOnlyIds.includes(id)
     ? ["/assets/work-previews/ai-lab-folder-preview/01.png"]
     : assets.map((image) => image.thumb);
@@ -390,7 +390,7 @@ const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
   return ({
   id,
   title,
-  preview: id === "06.05" ? "/assets/work-previews/ai-lab-multi-size-overview.png" : previewOnlyIds.includes(id) ? "/assets/work-previews/ai-lab-folder-preview/01.png" : previewImages[0],
+  preview: id === "06.05" ? "/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30" : previewOnlyIds.includes(id) ? "/assets/work-previews/ai-lab-folder-preview/01.png" : previewImages[0],
   previewImages,
   images,
   tag: work.layout === "cases" ? "CASE STUDY" : "VISUAL NOTE",
