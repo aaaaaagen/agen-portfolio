@@ -863,6 +863,7 @@ export function App() {
                 {selectedProject.title}
               </h1>
               <div className="reference-detail-meta"><span>{selectedWork.title} WORKS</span><span>{selectedWork.period}</span></div>
+              {selectedProject.id === "06.01" && <a className="reference-detail-live-link" href="https://flowmint-studio.agzzk1999.chatgpt.site/" target="_blank" rel="noreferrer">访问 FLOWMINT 网站 ↗</a>}
               {selectedProject.copy && (
                 <div className="reference-detail-copy">
                   {selectedProject.copy.projectName && <p className="reference-detail-copy-project-name">{selectedProject.copy.projectName}</p>}

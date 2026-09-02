@@ -760,6 +760,7 @@ footer { border-top:1px solid rgba(0,0,0,.3); padding-top:24px; display:flex; ju
 .work-06 .reference-detail-intro h1.is-long-project-title { font-size:clamp(27px,2vw,36px); letter-spacing:-.06em; }
 .work-06 .reference-detail-intro h1.is-flowmint-title { white-space:normal; line-height:.98; }
 .reference-detail-meta { display:flex; flex-direction:column; gap:7px; margin-bottom:34px; font:400 10px/1.2 var(--ui-font); }
+.reference-detail-live-link { display:inline-block; margin:-16px 0 26px; color:inherit; font:500 11px/1.3 var(--ui-font); letter-spacing:.02em; text-decoration:underline; text-underline-offset:4px; }
 .reference-detail-intro>p { max-width:320px; font-size:15px; line-height:1.6; }
 .reference-detail-copy { max-width:320px; max-height:calc(100vh - 315px); overflow-y:auto; padding-right:8px; scrollbar-width:thin; }
 .reference-detail-copy p { margin:0 0 16px; font-size:13px; line-height:1.65; }
