@@ -826,6 +826,7 @@ export function App() {
           <button onClick={() => exitWorkView("about")}>ABOUT</button>
           <button onClick={() => exitWorkView("works")}>WORKS</button>
           <button onClick={() => openWork("06")}>AI LAB</button>
+          <a href="https://flowmint-studio.agzzk1999.chatgpt.site/" target="_blank" rel="noreferrer">FLOWMINT</a>
           <button onClick={() => exitWorkView("contact")}>CONTACT</button>
         </nav>
         <button className="menu-button" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "CLOSE" : "MENU"}</button>
@@ -1026,6 +1027,7 @@ export function App() {
           <button onClick={() => jump("about")}>ABOUT</button>
           <button onClick={() => jump("works")}>WORKS</button>
           <button onClick={() => openWork("06")}>AI LAB</button>
+          <a href="https://flowmint-studio.agzzk1999.chatgpt.site/" target="_blank" rel="noreferrer">FLOWMINT</a>
           <button onClick={jumpToContact}>CONTACT</button>
         </nav>
         <button className="menu-button" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "CLOSE" : "MENU"}</button>
