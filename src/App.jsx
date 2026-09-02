@@ -117,7 +117,7 @@ const projectLabels = {
   "03": ["运营设计合辑", "2023兔年CNY", "2022设计合辑"],
   "04": ["抖音球王争霸赛", "START HERE. 边玩边创造", "抖音极速版天天免单"],
   "05": ["2023练习合辑"],
-  "06": ["FLOWMINT多模态AI创作工具", "主视觉长图延展Skill", "AI 抖音城市图文生成 Skill", "今日基金 FundNotch", "AI 多尺寸延展"],
+  "06": ["FLOWMINT — 多模态创意工作流画布", "主视觉长图延展Skill", "AI 抖音城市图文生成 Skill", "今日基金 FundNotch", "AI 多尺寸延展"],
 };
 
 const aboutSocials = [
@@ -181,8 +181,7 @@ const fundNotchAssetGroups = [
   ["2-1.png", "2-2.png", "2-3.png", "2-4.png", "2-5.png"],
 ];
 const flowmintAssetGroups = [
-  ["1-1.png", "1-2.png", "1-3.png", "1-4.png"],
-  ["2-1.png", "2-2.png", "2-3.png", "2-4.png"],
+  ["flowmint-cover.png"],
 ];
 
 const projectAssets = {
@@ -374,14 +373,17 @@ const fundNotchSidebarCopy = {
 };
 
 const flowmintSidebarCopy = {
-  overview: "让 AI 创作从一次次孤立的生成，变成可以连接、理解、复用和持续迭代的视觉工作流。",
+  overview: "FLOWMINT 是我独立设计并开发的一款 AI 创意工作流原型。它尝试把提示词、参考图片、生成模型和创作结果，从分散的输入框与文件夹中，组织成一张可连接、可复用、可回溯的无限画布。",
+  responsibilities: "这个项目源于我对现有 AI 生图工具的观察：多数产品更关注“生成一次结果”，但设计师真正的工作往往包含灵感收集、参考拆解、提示词调整、变量测试、结果筛选和方案延展。FLOWMINT 希望呈现的不只是结果，而是结果背后的完整创作路径。",
 };
 
 const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
   const id = `${work.id}.${String(index + 1).padStart(2, "0")}`;
   const previewOnlyIds = ["06.01", "06.05"];
   const assets = projectAssets[id] || (id === "06.04" || id === "06.05" ? [] : [{ thumb: work.preview, full: work.preview }]);
-  const previewImages = id === "06.05"
+  const previewImages = id === "06.01"
+    ? ["/assets/work-previews/ai-lab-flowmint/flowmint-cover.png"]
+    : id === "06.05"
     ? ["/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30"]
     : previewOnlyIds.includes(id)
     ? ["/assets/work-previews/ai-lab-folder-preview/01.png"]
@@ -390,7 +392,7 @@ const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
   return ({
   id,
   title,
-  preview: id === "06.05" ? "/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30" : previewOnlyIds.includes(id) ? "/assets/work-previews/ai-lab-folder-preview/01.png" : previewImages[0],
+  preview: id === "06.01" ? "/assets/work-previews/ai-lab-flowmint/flowmint-cover.png" : id === "06.05" ? "/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30" : previewOnlyIds.includes(id) ? "/assets/work-previews/ai-lab-folder-preview/01.png" : previewImages[0],
   previewImages,
   images,
   tag: work.layout === "cases" ? "CASE STUDY" : "VISUAL NOTE",
@@ -666,6 +668,7 @@ export function App() {
       <img
         src={src}
         alt={`${selectedProject.title} 项目图片 ${index + 1}`}
+        loading={index < 2 ? "eager" : "lazy"}
         onLoad={(event) => {
           const ratio = event.currentTarget.naturalWidth / event.currentTarget.naturalHeight;
           if (Number.isFinite(ratio) && ratio > 0) event.currentTarget.parentElement.style.setProperty("--image-ratio", ratio);
@@ -702,7 +705,7 @@ export function App() {
         const start = flowmintOffset;
         const rowImages = selectedProject.images.slice(start, start + group.length);
         flowmintOffset += group.length;
-        return <div className="flowmint-row" key={rowIndex}>
+        return <div className={`flowmint-row ${group.length === 1 ? "flowmint-row-single" : ""}`} key={rowIndex}>
           {rowImages.map((src, index) => renderReferenceDetailImage(src, start + index))}
         </div>;
       })}
@@ -719,7 +722,7 @@ export function App() {
       {beforeSections}
       {content.sections.map((section) => (
         <section key={section.heading}>
-          {section.image && <figure className="reference-detail-rich-media"><img src={section.image.src} alt={section.image.alt} /></figure>}
+          {section.image && <figure className="reference-detail-rich-media"><img src={section.image.src} alt={section.image.alt} loading="lazy" /></figure>}
           <h2>{section.heading}</h2>
           {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           {section.equation && <p className="reference-detail-rich-equation">{section.equation}</p>}
@@ -857,7 +860,7 @@ export function App() {
             <aside className="reference-detail-intro">
               <button className="reference-back" onClick={() => setSelectedProject(null)}><span>←</span> SEE ALL {selectedWork.title} WORKS</button>
               <h1 className={[selectedProject.title.length > 10 && "is-long-project-title", selectedProject.id === "06.01" && "is-flowmint-title"].filter(Boolean).join(" ")}>
-                {selectedProject.id === "06.01" ? <>FLOWMINT<br />多模态AI创作工具</> : selectedProject.title}
+                {selectedProject.title}
               </h1>
               <div className="reference-detail-meta"><span>{selectedWork.title} WORKS</span><span>{selectedWork.period}</span></div>
               {selectedProject.copy && (
@@ -990,7 +993,7 @@ export function App() {
                 selectedProject.id === "06.01" ? renderFlowmintGallery() : selectedProject.id === "06.04" ? renderFundNotchGallery() : null,
               )}
               {selectedProject.document && <a className="reference-project-document" href={selectedProject.document.href} target="_blank" rel="noreferrer">
-                <img src={selectedProject.document.cover} alt={`${selectedProject.document.title} 封面`} />
+                <img src={selectedProject.document.cover} alt={`${selectedProject.document.title} 封面`} loading="lazy" />
                 <span>
                   <small>PROJECT DOCUMENT</small>
                   <strong>{selectedProject.document.title}</strong>

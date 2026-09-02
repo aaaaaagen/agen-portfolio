@@ -981,6 +981,7 @@ footer { border-top:1px solid rgba(0,0,0,.3); padding-top:24px; display:flex; ju
   gap:16px;
   align-items:start;
 }
+.reference-detail-stream.project-stream-06-01 .flowmint-row-single { grid-template-columns:1fr; }
 .reference-detail-stream.project-stream-06-01 .flowmint-row .reference-detail-image {
   grid-column:auto;
   width:100%;
