@@ -119,7 +119,7 @@ const projectLabels = {
   "03": ["运营设计合辑", "2023兔年CNY", "2022设计合辑"],
   "04": ["抖音球王争霸赛", "START HERE. 边玩边创造", "抖音极速版天天免单"],
   "05": ["2023练习合辑"],
-  "06": ["商家海报模板匹配 Skill", "FLOWMINT — 多模态创意工作流画布", "主视觉长图延展Skill", "AI 抖音城市图文生成 Skill", "今日基金 FundNotch", "AI 多尺寸延展"],
+  "06": ["商家海报模板匹配设计工具", "FLOWMINT — 多模态创意工作流画布", "主视觉长图延展Skill", "AI 抖音城市图文生成 Skill", "今日基金 FundNotch", "AI 多尺寸延展"],
 };
 
 const projectIdsByWork = {
