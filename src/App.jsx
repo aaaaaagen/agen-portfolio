@@ -4,10 +4,12 @@ import { fundNotchContent } from "./fundNotchContent";
 import { aiLabVisualSkillContent } from "./aiLabVisualSkillContent";
 import { aiDouyinCitySkillContent } from "./aiDouyinCitySkillContent";
 import { flowmintContent } from "./flowmintContent";
+import { merchantTemplateMatcherContent } from "./merchantTemplateMatcherContent";
 import { aiLabMultiSizeContent } from "./aiLabMultiSizeContent";
 import { douyinUgcContent, douyinUgcSidebarCopy, douyinUgcTopContent } from "./douyinUgcContent";
 
 const scrambleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const merchantMatcherCover = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"><defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101018"/><stop offset="1" stop-color="#24133b"/></linearGradient><linearGradient id="accent"><stop stop-color="#a986ff"/><stop offset="1" stop-color="#ff8c72"/></linearGradient><pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#fff" stroke-opacity=".055"/></pattern></defs><rect width="1600" height="900" fill="url(#bg)"/><rect width="1600" height="900" fill="url(#grid)"/><circle cx="1260" cy="440" r="248" fill="#9e6dff" opacity=".12"/><circle cx="1260" cy="440" r="188" fill="none" stroke="url(#accent)" stroke-opacity=".72" stroke-width="2"/><circle cx="1260" cy="440" r="124" fill="none" stroke="#fff" stroke-opacity=".34"/><path d="M1092 438h336M1260 270v336M1140 320l240 240M1380 320l-240 240" stroke="#fff" stroke-opacity=".2"/><rect x="1187" y="367" width="146" height="146" rx="24" fill="#17131f" stroke="url(#accent)" stroke-width="2"/><circle cx="1260" cy="440" r="38" fill="url(#accent)"/><circle cx="1260" cy="440" r="12" fill="#17131f"/><rect x="1012" y="276" width="58" height="58" rx="14" fill="#15131d" stroke="#aa8aff"/><rect x="1450" y="546" width="58" height="58" rx="14" fill="#15131d" stroke="#ff9278"/><path d="M1070 305l68 56m263 181 49 33" stroke="url(#accent)" stroke-width="2" stroke-dasharray="7 10"/><text x="96" y="104" fill="#c9b2ff" font-family="Arial,sans-serif" font-size="24" letter-spacing="7">AGEN AI LAB / SKILL SYSTEM</text><text x="88" y="425" fill="#fff" font-family="Arial,sans-serif" font-size="174" font-weight="700" letter-spacing="-10">MATCH</text><text x="101" y="530" fill="#e7dcff" font-family="Arial,sans-serif" font-size="47" letter-spacing="2">餐饮海报模板匹配</text><text x="102" y="612" fill="#b7adc5" font-family="Arial,sans-serif" font-size="25" letter-spacing="3">EXPLAINABLE RECOMMENDATION · FACT-SAFE GENERATION</text><path d="M102 690h610" stroke="url(#accent)" stroke-width="3"/><text x="102" y="752" fill="#c7bfd2" font-family="Arial,sans-serif" font-size="21" letter-spacing="5">MECHANISM STUDY / 2026</text></svg>`)}`;
 
 const scrambleTextFrame = (text, progress) => {
   const revealAt = progress * Array.from(text).filter((character) => character !== " " && character !== "\n").length;
@@ -117,7 +119,11 @@ const projectLabels = {
   "03": ["运营设计合辑", "2023兔年CNY", "2022设计合辑"],
   "04": ["抖音球王争霸赛", "START HERE. 边玩边创造", "抖音极速版天天免单"],
   "05": ["2023练习合辑"],
-  "06": ["FLOWMINT — 多模态创意工作流画布", "主视觉长图延展Skill", "AI 抖音城市图文生成 Skill", "今日基金 FundNotch", "AI 多尺寸延展"],
+  "06": ["商家海报模板匹配 Skill", "FLOWMINT — 多模态创意工作流画布", "主视觉长图延展Skill", "AI 抖音城市图文生成 Skill", "今日基金 FundNotch", "AI 多尺寸延展"],
+};
+
+const projectIdsByWork = {
+  "06": ["06.06", "06.01", "06.02", "06.03", "06.04", "06.05"],
 };
 
 const aboutSocials = [
@@ -185,6 +191,7 @@ const flowmintAssetGroups = [
 ];
 
 const projectAssets = {
+  "06.06": [{ thumb: merchantMatcherCover, full: merchantMatcherCover }],
   "06.01": flowmintAssetGroups.flat().map((filename) => {
     const src = `/assets/work-previews/ai-lab-flowmint/${filename}`;
     return { thumb: src, full: src };
@@ -377,8 +384,13 @@ const flowmintSidebarCopy = {
   responsibilities: "这个项目源于我对现有 AI 生图工具的观察：多数产品更关注“生成一次结果”，但设计师真正的工作往往包含灵感收集、参考拆解、提示词调整、变量测试、结果筛选和方案延展。FLOWMINT 希望呈现的不只是结果，而是结果背后的完整创作路径。",
 };
 
+const merchantTemplateMatcherSidebarCopy = {
+  overview: "一套面向餐饮商家的模板匹配与海报生成 Skill。它把依赖经验的模板挑选拆成可解释、可复核的推荐流程，让每个视觉方向都有依据。",
+  responsibilities: "围绕模板与无模板两条路径，梳理输入校验、事实保护、视觉匹配、多样性排序、生成和结果检查。",
+};
+
 const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
-  const id = `${work.id}.${String(index + 1).padStart(2, "0")}`;
+  const id = projectIdsByWork[work.id]?.[index] || `${work.id}.${String(index + 1).padStart(2, "0")}`;
   const previewOnlyIds = ["06.01", "06.05"];
   const assets = projectAssets[id] || (id === "06.04" || id === "06.05" ? [] : [{ thumb: work.preview, full: work.preview }]);
   const previewImages = id === "06.01"
@@ -395,11 +407,11 @@ const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
   preview: id === "06.01" ? "/assets/work-previews/ai-lab-flowmint/flowmint-cover.png" : id === "06.05" ? "/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30" : previewOnlyIds.includes(id) ? "/assets/work-previews/ai-lab-folder-preview/01.png" : previewImages[0],
   previewImages,
   images,
-  tag: work.layout === "cases" ? "CASE STUDY" : "VISUAL NOTE",
-  role: id === "04.01" ? "CORE VISUAL / PROJECT MANAGEMENT" : "ROLE / PROCESS / OUTCOME",
-  copy: id === "01.01" ? douyinSpringCopy : id === "01.02" ? qishuiMusicCopy : id === "01.03" ? danceCompetitionCopy : id === "01.04" ? nationalDayCopy : id === "01.05" ? speedEditionCopy : id === "01.06" ? douyinUgcSidebarCopy : id === "04.01" ? brandBasketballCopy : id === "04.02" ? brandAiCreatorCopy : id === "04.03" ? brandDailyFreeCopy : id === "06.01" ? flowmintSidebarCopy : id === "06.04" ? fundNotchSidebarCopy : null,
+  tag: id === "06.06" ? "CASE STUDY" : work.layout === "cases" ? "CASE STUDY" : "VISUAL NOTE",
+  role: id === "06.06" ? "SKILL DESIGN / MATCHING STRATEGY" : id === "04.01" ? "CORE VISUAL / PROJECT MANAGEMENT" : "ROLE / PROCESS / OUTCOME",
+  copy: id === "06.06" ? merchantTemplateMatcherSidebarCopy : id === "01.01" ? douyinSpringCopy : id === "01.02" ? qishuiMusicCopy : id === "01.03" ? danceCompetitionCopy : id === "01.04" ? nationalDayCopy : id === "01.05" ? speedEditionCopy : id === "01.06" ? douyinUgcSidebarCopy : id === "04.01" ? brandBasketballCopy : id === "04.02" ? brandAiCreatorCopy : id === "04.03" ? brandDailyFreeCopy : id === "06.01" ? flowmintSidebarCopy : id === "06.04" ? fundNotchSidebarCopy : null,
   imageNotes: id === "01.01" ? douyinSpringImageNotes : null,
-  richContent: id === "01.06" ? douyinUgcContent : id === "06.01" ? flowmintContent : id === "06.02" ? aiLabVisualSkillContent : id === "06.03" ? aiDouyinCitySkillContent : id === "06.04" ? fundNotchContent : id === "06.05" ? aiLabMultiSizeContent : null,
+  richContent: id === "06.06" ? merchantTemplateMatcherContent : id === "01.06" ? douyinUgcContent : id === "06.01" ? flowmintContent : id === "06.02" ? aiLabVisualSkillContent : id === "06.03" ? aiDouyinCitySkillContent : id === "06.04" ? fundNotchContent : id === "06.05" ? aiLabMultiSizeContent : null,
   richContentBeforeImages: id === "01.06" ? douyinUgcTopContent : null,
   imageGroups: id === "04.03" ? brandDailyFreeAssetGroups.map((group) => group.length) : id === "04.02" ? brandAiCreatorAssetGroups.map((group) => group.length) : id === "06.04" ? fundNotchAssetGroups.map((group) => group.length) : null,
   document: id === "04.01" ? {
@@ -409,7 +421,7 @@ const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
     meta: "PDF · 26 PAGES · OPEN ↗",
   } : null,
   detailLayout: id === "01.06" ? "douyin-ugc-flow" : id === "01.02" ? "qishui-grid" : id === "01.03" ? "dance-grid" : id === "01.04" ? "national-day-grid" : id === "01.05" ? "speed-grid" : id.startsWith("02.") || id.startsWith("04.") || id.startsWith("05.") || id.startsWith("06.") ? "unified-grid" : id === "03.01" || id === "03.02" || id === "03.03" ? "kuaishou-grid" : null,
-  description: id === "01.01" ? "2026 抖音春节项目视觉资料，按原始文件顺序完整展示。" : id === "03.01" ? "快手运营设计视觉素材，按文件命名顺序完整展示。" : id === "03.02" ? "2023 兔年 CNY 视觉素材，按文件命名顺序完整展示。" : id === "03.03" ? "2022 虎年 CNY 视觉素材，按文件命名顺序完整展示。" : "这里将放入真实项目的背景、你的角色、关键判断、产出与结果。",
+  description: id === "06.06" ? "餐饮海报模板匹配与可解释推荐机制设计。" : id === "01.01" ? "2026 抖音春节项目视觉资料，按原始文件顺序完整展示。" : id === "03.01" ? "快手运营设计视觉素材，按文件命名顺序完整展示。" : id === "03.02" ? "2023 兔年 CNY 视觉素材，按文件命名顺序完整展示。" : id === "03.03" ? "2022 虎年 CNY 视觉素材，按文件命名顺序完整展示。" : "这里将放入真实项目的背景、你的角色、关键判断、产出与结果。",
   });
 });
 
