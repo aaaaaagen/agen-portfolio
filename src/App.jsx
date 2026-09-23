@@ -191,7 +191,6 @@ const flowmintAssetGroups = [
 ];
 
 const projectAssets = {
-  "06.06": [{ thumb: merchantMatcherCover, full: merchantMatcherCover }],
   "06.01": flowmintAssetGroups.flat().map((filename) => {
     const src = `/assets/work-previews/ai-lab-flowmint/${filename}`;
     return { thumb: src, full: src };
@@ -392,7 +391,7 @@ const merchantTemplateMatcherSidebarCopy = {
 const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
   const id = projectIdsByWork[work.id]?.[index] || `${work.id}.${String(index + 1).padStart(2, "0")}`;
   const previewOnlyIds = ["06.01", "06.05"];
-  const assets = projectAssets[id] || (id === "06.04" || id === "06.05" ? [] : [{ thumb: work.preview, full: work.preview }]);
+  const assets = projectAssets[id] || (id === "06.04" || id === "06.05" || id === "06.06" ? [] : [{ thumb: work.preview, full: work.preview }]);
   const previewImages = id === "06.01"
     ? ["/assets/work-previews/ai-lab-flowmint/flowmint-cover.png"]
     : id === "06.05"
@@ -404,7 +403,7 @@ const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
   return ({
   id,
   title,
-  preview: id === "06.01" ? "/assets/work-previews/ai-lab-flowmint/flowmint-cover.png" : id === "06.05" ? "/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30" : previewOnlyIds.includes(id) ? "/assets/work-previews/ai-lab-folder-preview/01.png" : previewImages[0],
+  preview: id === "06.06" ? null : id === "06.01" ? "/assets/work-previews/ai-lab-flowmint/flowmint-cover.png" : id === "06.05" ? "/assets/work-previews/ai-lab-multi-size-overview.png?v=505a9f30" : previewOnlyIds.includes(id) ? "/assets/work-previews/ai-lab-folder-preview/01.png" : previewImages[0],
   previewImages,
   images,
   tag: id === "06.06" ? "CASE STUDY" : work.layout === "cases" ? "CASE STUDY" : "VISUAL NOTE",
@@ -412,6 +411,7 @@ const projectsFor = (work) => projectLabels[work.id].map((title, index) => {
   copy: id === "06.06" ? merchantTemplateMatcherSidebarCopy : id === "01.01" ? douyinSpringCopy : id === "01.02" ? qishuiMusicCopy : id === "01.03" ? danceCompetitionCopy : id === "01.04" ? nationalDayCopy : id === "01.05" ? speedEditionCopy : id === "01.06" ? douyinUgcSidebarCopy : id === "04.01" ? brandBasketballCopy : id === "04.02" ? brandAiCreatorCopy : id === "04.03" ? brandDailyFreeCopy : id === "06.01" ? flowmintSidebarCopy : id === "06.04" ? fundNotchSidebarCopy : null,
   imageNotes: id === "01.01" ? douyinSpringImageNotes : null,
   richContent: id === "06.06" ? merchantTemplateMatcherContent : id === "01.06" ? douyinUgcContent : id === "06.01" ? flowmintContent : id === "06.02" ? aiLabVisualSkillContent : id === "06.03" ? aiDouyinCitySkillContent : id === "06.04" ? fundNotchContent : id === "06.05" ? aiLabMultiSizeContent : null,
+  documentUrl: id === "06.06" ? "https://my.feishu.cn/wiki/LKVawD2dGiiy53kwk0Gcblwxnme" : null,
   richContentBeforeImages: id === "01.06" ? douyinUgcTopContent : null,
   imageGroups: id === "04.03" ? brandDailyFreeAssetGroups.map((group) => group.length) : id === "04.02" ? brandAiCreatorAssetGroups.map((group) => group.length) : id === "06.04" ? fundNotchAssetGroups.map((group) => group.length) : null,
   document: id === "04.01" ? {
@@ -858,10 +858,10 @@ export function App() {
             </header>
             <div className="reference-project-rows">
               {selectedProjects.map((project, index) => (
-                <button className="reference-project-row" onClick={() => setSelectedProject(project)} key={project.id}>
+                <button className={`reference-project-row ${project.preview ? "" : "reference-project-row-no-preview"}`} onClick={() => setSelectedProject(project)} key={project.id}>
                   <span className="reference-project-title">{project.title}</span>
                   <span className="reference-project-extra"><small>{selectedWork.period || "ONGOING"}</small><em>{project.role}</em></span>
-                  <img src={project.preview} alt={`${project.title} 预览`} />
+                  {project.preview && <img src={project.preview} alt={`${project.title} 预览`} />}
                 </button>
               ))}
             </div>
@@ -876,6 +876,7 @@ export function App() {
                 {selectedProject.title}
               </h1>
               <div className="reference-detail-meta"><span>{selectedWork.title} WORKS</span><span>{selectedWork.period}</span></div>
+              {selectedProject.documentUrl && <a className="reference-detail-source-link" href={selectedProject.documentUrl} target="_blank" rel="noreferrer">打开飞书项目文档</a>}
               {selectedProject.id === "06.01" && <a className="reference-detail-live-link" href="https://flowmint-studio.agzzk1999.chatgpt.site/" target="_blank" rel="noreferrer">访问 FLOWMINT 网站 ↗</a>}
               {selectedProject.copy && (
                 <div className="reference-detail-copy">
